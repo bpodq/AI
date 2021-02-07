@@ -11,7 +11,7 @@ def BGR2RGB(im):
     return im
 
 
-im=cv2.imread("1.jpg")#读入彩色图片
-plt.imshow(BGR2RGB(im))#显示彩色图片
+im=cv2.imread("1.jpg")      # 读入彩色图片
+plt.imshow(BGR2RGB(im))     # 显示彩色图片
 plt.show()
 
