@@ -3,14 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-path = 'D:\\Python37\\Lib\\site-packages\\cv2\\data\\'
+path = 'D:/Python37/Lib/site-packages/cv2/data/'
 
 # 1.加载文件和图片 2.进行灰度处理 3.得到haar特征 4.检测人脸 5.标记
 face_xml = cv2.CascadeClassifier(path + 'haarcascade_frontalface_default.xml')
 eye_xml = cv2.CascadeClassifier(path + 'haarcascade_eye.xml')
 
 
-img = cv2.imread('image\\6.jpg')
+img = cv2.imread('image/6.jpg')
 cv2.imshow('img', img)
 
 
