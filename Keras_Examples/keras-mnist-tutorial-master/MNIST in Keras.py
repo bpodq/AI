@@ -61,6 +61,9 @@
 
 # In[2]:
 
+# 在import tensorflow之前
+# import os
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'  # 不使用GPU
 
 import numpy as np
 import matplotlib.pyplot as plt
