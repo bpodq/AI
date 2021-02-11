@@ -15,7 +15,7 @@ import time
 import tensorflow as tf
 from keras import backend as K
 config = tf.compat.v1.ConfigProto()
-config.gpu_options.allow_growth=True
+config.gpu_options.allow_growth = True
 sess = tf.compat.v1.Session(config=config)
 # K.set_session(sess)
 tf.compat.v1.keras.backend.set_session(sess)
@@ -49,7 +49,7 @@ else:
                   metrics=['accuracy'])
 
 batch_size = 100
-epochs = 10
+epochs = 1
 model.fit(train_X, train_y,
           batch_size=batch_size,
           epochs=epochs,
