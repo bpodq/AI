@@ -67,13 +67,12 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-plt.rcParams['figure.figsize'] = (7,7) # Make the figures a bit bigger
-
 from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation
 from keras.utils import np_utils
 
+plt.rcParams['figure.figsize'] = (7,7) # Make the figures a bit bigger
 
 # ## Load training data
 
@@ -146,7 +145,7 @@ model.add(Activation('relu')) # An "activation" is just a non-linear function ap
                               # we clamp all values below 0 to 0.
                            
 model.add(Dropout(0.2))   # Dropout helps protect the model from memorizing or "overfitting" the training data
-model.add(Dense(512))
+model.add(Dense(512))    # 暴力，直接用1层512个节点
 model.add(Activation('relu'))
 model.add(Dropout(0.2))
 model.add(Dense(10))
@@ -215,7 +214,7 @@ incorrect_indices = np.nonzero(predicted_classes != y_test)[0]
 plt.figure()
 for i, correct in enumerate(correct_indices[:9]):
     plt.subplot(3,3,i+1)
-    plt.imshow(X_test[correct].reshape(28,28), cmap='gray', interpolation='none')
+    plt.imshow(X_test[correct].reshape(28, 28), cmap='gray', interpolation='none')
     plt.title("Predicted {}, Class {}".format(predicted_classes[correct], y_test[correct]))
 
 plt.figure()

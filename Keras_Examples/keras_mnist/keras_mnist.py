@@ -15,7 +15,7 @@ from icecream import ic
 import tensorflow as tf
 from keras import backend as K
 config = tf.compat.v1.ConfigProto()
-config.gpu_options.allow_growth=True
+config.gpu_options.allow_growth = True
 sess = tf.compat.v1.Session(config=config)
 # K.set_session(sess)
 tf.compat.v1.keras.backend.set_session(sess)
@@ -32,9 +32,9 @@ train_X /= 255
 train_y = to_categorical(train_y, 10)
 
 
-file = 'keras_mnist_model.h5'
+file = 'keras_mnist_model'
 if file in os.listdir('.'):
-    model = load_model(file)
+    model = load_model(file+'.h5')
     # os.rename(file+)
 else:
     model = Sequential()
@@ -75,6 +75,6 @@ end = time.time()
 
 print("循环运行时间:%.2f秒" % (end-start))
 
-model.save(file, overwrite=True)  # 保存模型
+model.save(file+'.h5', overwrite=True)  # 保存模型
 model.save(file+'_'+time.strftime("%Y%m%d-%H%M%S", time.localtime())+'.h5')  # 再保存一遍，加上时间
 
