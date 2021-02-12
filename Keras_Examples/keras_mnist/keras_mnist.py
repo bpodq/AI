@@ -10,7 +10,7 @@ from keras.losses import categorical_crossentropy
 from keras.optimizers import Adadelta
 from keras.models import load_model
 import time
-
+from icecream import ic
 
 import tensorflow as tf
 from keras import backend as K
@@ -23,6 +23,9 @@ tf.compat.v1.keras.backend.set_session(sess)
 start = time.time()
 
 train_X, train_y = mnist.load_data()[0]
+ic(train_X.shape)
+ic(train_y.shape)
+
 train_X = train_X.reshape(-1, 28, 28, 1)
 train_X = train_X.astype('float32')
 train_X /= 255
@@ -48,8 +51,9 @@ else:
                   optimizer=Adadelta(),
                   metrics=['accuracy'])
 
+# 6000个样本，如果batch_size=100，则600批
 batch_size = 100
-epochs = 10
+epochs = 100
 model.fit(train_X, train_y,
           batch_size=batch_size,
           epochs=epochs,
@@ -57,11 +61,14 @@ model.fit(train_X, train_y,
           )
 
 test_X, test_y = mnist.load_data()[1]
+ic(test_X.shape)
+ic(test_y.shape)
+
 test_X = test_X.reshape(-1, 28, 28, 1)
 test_X = test_X.astype('float32')
 test_X /= 255
 test_y = to_categorical(test_y, 10)
-loss, accuracy = model.evaluate(test_X, test_y, verbose=1)
+loss, accuracy = model.evaluate(test_X, test_y, verbose=1)  # 输出中的313是什么？
 print('loss:%.4f accuracy:%.4f' % (loss, accuracy))
 
 end = time.time()
