@@ -38,7 +38,6 @@ tf.compat.v1.keras.backend.set_session(sess)
 file = 'playground1'
 if os.path.exists(file+'.h5'):
     model = load_model(file+'.h5')
-    # os.rename(file+)
 else:
     model = Sequential()
     model.add(Dense(input_dim=2, units=1, activation='sigmoid'))
@@ -63,7 +62,7 @@ x = np.linspace(-10, 10, 101)
 y = W
 
 model.save(file+'.h5', overwrite=True)  # 保存模型
-model.save(file+'_'+time.strftime("%Y%m%d-%H%M%S", time.localtime())+'.h5')  # 再保存一遍，加上时间
+model.save(file+'-'+time.strftime("%Y%m%d-%H%M%S", time.localtime())+'.h5')  # 再保存一遍，加上时间
 
 
 w1 = W[0][0]
