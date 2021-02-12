@@ -20,31 +20,13 @@ from icecream import ic
 
 start = time.time()
 
-X_train = pd.read_csv('X_train.csv').values
-Y_train = pd.read_csv('Y_train.csv').values
-# X_train = X_train.astype('float32')
-# Y_train = Y_train.astype('float32')
+train = pd.read_csv('train.csv')
+X_train = train.iloc[:, 0:2].values
+Y_train = train.iloc[:, 2].values
 
-X_test = pd.read_csv('X_test.csv').values
-Y_test = pd.read_csv('Y_test.csv').values
-# X_test = X_train.astype('float32')
-# Y_test = Y_train.astype('float32')
-
-'''
-ic(X_train.max())
-# print('max: ', X_train.max())
-X_train /= X_train.max()
-# Y_train = to_categorical(Y_train, 2)
-X_test /= X_test.max()
-# Y_test = to_categorical(Y_test, 2)
-'''
-
-fig = plt.figure(1)
-plt.plot(X_train[:, 0], X_train[:, 1], '.')
-# plt.plot(2[:, 0], X2[:, 1], '.')
-plt.draw()
-plt.pause(1)
-plt.close(fig)
+test = pd.read_csv('test.csv')
+X_test = test.iloc[:, 0:2].values
+Y_test = test.iloc[:, 2].values
 
 
 config = tf.compat.v1.ConfigProto()
@@ -68,8 +50,9 @@ else:
                   optimizer='rmsprop',
                   metrics=['accuracy'])
 
+
 # model.fit(X_train, Y_train, batch_size=n, epochs=1000, verbose=1, validation_data=(X_test, Y_test))
-model.fit(X_train, Y_train, batch_size=len(Y_train), epochs=1000, verbose=1)
+model.fit(X_train, Y_train, batch_size=len(Y_train), epochs=100, verbose=1)
 W, b = model.layers[0].get_weights()
 print('Weights=', W, '\nbiases=', b)
 
@@ -82,3 +65,15 @@ y = W
 model.save(file+'.h5', overwrite=True)  # 保存模型
 model.save(file+'_'+time.strftime("%Y%m%d-%H%M%S", time.localtime())+'.h5')  # 再保存一遍，加上时间
 
+
+w1 = W[0][0]
+w2 = W[1][0]
+x = np.linspace(0, 5, 101)
+y = (-b - w1*x) / w2
+train.plot.scatter('x1', 'x2', c='y', colormap='jet')
+plt.plot(x, y, 'r')
+# plt.plot(X_train[:, 0], X_train[:, 1], 'b.')
+# plt.plot(X_test[:, 0], X_test[:, 1], 'g.')
+test.plot.scatter('x1', 'x2', c='y', colormap='gist_rainbow')
+plt.plot(x, y, 'r')
+plt.show()
