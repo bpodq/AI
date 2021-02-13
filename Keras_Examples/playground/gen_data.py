@@ -1,8 +1,12 @@
+# 产生playground1的数据
+
 import os
 import pandas as pd
 import numpy as np
 
-def generate_sample(n):
+
+def generate_sample(m):
+    n = int(m/2)
     X1 = np.random.randn(n, 2)
     Y1 = np.zeros(n)
     X2 = np.random.randn(n, 2) + [10, 5]
@@ -14,8 +18,8 @@ def generate_sample(n):
 
 
 n = 100
-(X_train, Y_train) = generate_sample(int(n/2))
-(X_test, Y_test) = generate_sample(int(n/2))
+(X_train, Y_train) = generate_sample(n)
+(X_test, Y_test) = generate_sample(n)
 # print(X_train.shape)
 # print(Y_train.shape)
 
