@@ -11,10 +11,13 @@
 
 2. 建模流程
 
+# 软件，语言
 语言：Python, Matlab, R
 
 软件：PyCharm, Jupyter, Matlab, RStudio
 
+
+# 算法，模型
 回归: 最小二乘，L2与L1模的区别
 
 
@@ -22,6 +25,8 @@
 
 AdaBoost
 
+
+# 案例
 Google Playground
 
 iris
