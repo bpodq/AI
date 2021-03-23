@@ -1,0 +1,6 @@
+CUDA安装了多次总是失败
+
+把Visual Studio Integration去掉也不行
+
+后来发现把NSight for VSE也去掉就可以了
+

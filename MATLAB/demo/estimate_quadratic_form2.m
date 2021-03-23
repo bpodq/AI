@@ -1,9 +1,9 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 用梯度下降法估计参数
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [w, L] = estimate_quadratic_form()
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 改进学习速率
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [w, L] = estimate_quadratic_form2()
 %% 二次型
-w0 = [1 5];
+w0 = [1 1];
 
 %% 画出二次型曲面
 m0 = 51;
@@ -33,40 +33,51 @@ L = zeros(50, 1);
 L(1) = cal_res(x, z, w(1, :));  % 记录最初目标函数
 
 % 速率
-% rate = 0.0003;  % 发散
-% rate = 0.0002;  % 来回跑
-% rate = 0.00015; % 稍好
-rate = 0.0001;    % 合适
-% rate = 0.000001;  % 过小
+nIter2 = 20;  % 内部循环
+tol = 10;     % 每一步目标函数的改进要超过tol
 for i = 1:nIter
     eta = cal_grad(x, z, w(i, :));
-    w(i+1, :) = w(i, :) - eta*rate;
-    L(i+1) = cal_res(x, z, w(i+1, :));  % 记录最初目标函数
+    rate = 0.1;  % 每次重置rate，还可以考虑根据上次的rate进行调整
+    flag = 0;
+    for j = 1:nIter2
+        w(i+1, :) = w(i, :) - eta*rate;
+        L(i+1) = cal_res(x, z, w(i+1, :));  % 记录最初目标函数
+        if L(i+1) < L(i) - tol;
+            flag = 1;
+            break;
+        else
+            rate = rate / 2;
+        end
+    end
+    if ~flag  % 无法改进了
+        w = w(1:i, :);
+        L = L(1:i);
+        break;
+    end
 end
 
 disp('最小二乘法结果：')
 disp(w_hat)
 disp('梯度下降法结果：')
-disp(w(nIter+1, :))
+disp(w(end, :))
 
 %% 画图
 figure(1)
 hold off
 mesh(x0, y0, z0); hold on
 plot3(x(:, 1), x(:, 2), z, '.r')
+cameratoolbar('Show')
 
 figure(2)
 plot_contour(x, z, w0); hold on
-% plot(w(end-20:end,1), w(end-20:end,2), '.-'); 
-plot(w(:,1), w(:,2), '.-'); 
-
+plot(w0(1), w0(2), 'b.', 'markersize', 20)
+plot(w(:,1), w(:,2), 'r.-');
+plot(w(end, 1), w(end, 2), 'r.', 'markersize', 15)
 hold off
 
-
 figure(3)
-plot(0:nIter, L)
-
-
+subplot(2,1,1); plot(0:length(L)-1, L)
+subplot(2,1,2); plot(0:length(L)-1, log(L))
 
 %% 函数
 function z = f(x, w)
